@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
-
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { Product } from './products/product.entity'
+
+import { Product } from './typeorm/entities/Product'
 import { ProductsModule } from './products/products.module'
 
 const TypeORMModule = TypeOrmModule.forRoot({
@@ -12,9 +12,10 @@ const TypeORMModule = TypeOrmModule.forRoot({
   password: 'admin',
   database: 'store',
   entities: [Product],
+  synchronize: true,
 })
 
 @Module({
-  imports: [TypeORMModule, ProductsModule],
+  imports: [ProductsModule, TypeORMModule],
 })
 export class AppModule {}
