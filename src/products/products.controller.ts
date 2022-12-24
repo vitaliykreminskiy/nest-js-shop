@@ -10,24 +10,22 @@ import {
   ValidationPipe,
 } from '@nestjs/common'
 import { Request, Response } from 'express'
-import { Product } from 'types/product'
 import { CreateProductDTO } from './product.dto'
-
-const products: Product[] = []
+import { ProductsService } from './products.service'
 
 @Controller('products')
 export class ProductsController {
+  constructor(private productsService: ProductsService) {}
+
   @Get('all')
   all() {
-    return products
+    this.productsService.getAll()
   }
 
   @Post('new')
   @UsePipes(new ValidationPipe())
   new(@Body() product: CreateProductDTO, @Res() res: Response) {
-    products.push(product)
-
-    return res.send('Created')
+    this.productsService.create(product)
   }
 
   @Get(':SKU')
