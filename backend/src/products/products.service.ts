@@ -20,4 +20,8 @@ export class ProductsService {
   getAll(): Promise<Product[]> {
     return this.productsRepository.find()
   }
+
+  findBySKU(SKU: string): Promise<Product | null> {
+    return this.productsRepository.findOne({ where: { SKU } })
+  }
 }
